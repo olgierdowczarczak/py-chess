@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from figure import *
 
 
 class IUser(ABC):
@@ -18,36 +17,22 @@ class Bot(IUser):
         return "Bot"
 
     def user_move(self, game) -> int:
-        best_figure_move: tuple = (0, 0, 0, 0) # point, move, direction, object
-        
+        best_move: tuple = (0, 0, 0, 0) # point, move, direction, figure
+
         for figure in self.user_figures:
-            best_move_in_figure: tuple = (0, 0, 0) # point, move, direction
+            move_in_figure: tuple = (0, 0, 0) # point, move, direction
 
             for direction in figure.figures_directions:
-                best_move_in_direction: tuple = (0, 0) # point, move
-
-                move_touch: bool = False
+                move_in_direction: tuple = (0, 0) # point, move
                 move_point: int = 0
-                for move in range(1, figure.figure_move + 1):
+
+                for move in range(figure.figure_move):
                     move_point: int = figure.check_figure_move(direction, move, game)
-                    # print(direction, move, move_point)
-                    if move_point == 0:
-                        continue
-
-                    if move_touch is True:
-                        continue
-
-                    if move_point == -1:
-                        move_touch = True
-                        continue
-                    
-                    if move_point > best_move_in_direction[0]:
-                        best_move_in_direction = (move_point, move)
-
-                if best_move_in_direction[0] > best_move_in_figure[0]:
-                    best_move_in_figure = (best_move_in_direction[0], best_move_in_direction[1], direction)
-
-            print(figure, figure.figure_position, best_move_in_figure)
+                    if move_point == -1: break # own figure in path
+                    if move_point == 0: continue # blocked move
+                    if move_point > move_in_direction[0]: move_in_direction = (move_point, move)
+                if move_in_direction[0] > move_in_figure[0]: move_in_figure = (move_in_direction[0], move_in_direction[1], direction)
+            if move_in_figure[0] > best_move[0]: best_move = (move_in_figure[0], move_in_figure[1], move_in_figure[2], figure)
 
         self.first_move = True
         return -1

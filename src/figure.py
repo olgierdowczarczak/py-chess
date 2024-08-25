@@ -19,7 +19,7 @@ class Pawn(IFigure):
     }
     
     figure_point: int = 1
-    figure_move: int = 2
+    figure_move: int = 1
 
     def __init__(self, figure_owner, figure_position: tuple) -> None:
         self.figure_owner = figure_owner
