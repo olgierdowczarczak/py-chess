@@ -19,21 +19,24 @@ class Pawn(IFigure):
     }
     
     figure_point: int = 1
-    figure_move: int = 1
+    figure_move: int = 2
+    figure_files: list = ["images/w_pawn.png", "images/b_pawn.png"]
 
-    def __init__(self, figure_owner, figure_position: tuple) -> None:
+    def __init__(self, figure_owner, figure_position: tuple, figure_image) -> None:
         self.figure_owner = figure_owner
         self.figure_position: tuple = figure_position
+        self.figure_image = figure_image
 
     def __repr__(self) -> str:
         return "P"
 
     def check_figure_move(self, direction: str, move: int, game) -> int:
         position_object = game.check_move(self.figure_position, self.figures_directions[direction], move)
+
         if position_object == 0:
             return 0
         
-        if game.mover.first_move == True and game > 1:
+        if game.mover.first_move == True:
             return 0
         
         if position_object is None:
@@ -60,10 +63,12 @@ class Rook(IFigure):
     
     figure_point: int = 2
     figure_move: int = 8
+    figure_files: list = ["images/w_rook.png", "images/b_rook.png"]
 
-    def __init__(self, figure_owner, figure_position: tuple) -> None:
+    def __init__(self, figure_owner, figure_position: tuple, figure_image) -> None:
         self.figure_owner = figure_owner
         self.figure_position: tuple = figure_position
+        self.figure_image = figure_image
 
     def __repr__(self) -> str:
         return "R"
@@ -95,10 +100,12 @@ class Knight(IFigure):
     
     figure_point: int = 3
     figure_move: int = 1
+    figure_files: list = ["images/w_knight.png", "images/b_knight.png"]
 
-    def __init__(self, figure_owner, figure_position: tuple) -> None:
+    def __init__(self, figure_owner, figure_position: tuple, figure_image) -> None:
         self.figure_owner = figure_owner
         self.figure_position: tuple = figure_position
+        self.figure_image = figure_image
 
     def __repr__(self) -> str:
         return "K"
@@ -129,10 +136,12 @@ class Bishop(IFigure):
     
     figure_point: int = 4
     figure_move: int = 8
+    figure_files: list = ["images/w_bishop.png", "images/b_bishop.png"]
 
-    def __init__(self, figure_owner, figure_position: tuple) -> None:
+    def __init__(self, figure_owner, figure_position: tuple, figure_image) -> None:
         self.figure_owner = figure_owner
         self.figure_position: tuple = figure_position
+        self.figure_image = figure_image
 
     def __repr__(self) -> str:
         return "B"
@@ -167,10 +176,12 @@ class Queen(IFigure):
     
     figure_point: int = 5
     figure_move: int = 8
+    figure_files: list = ["images/w_queen.png", "images/b_queen.png"]
 
-    def __init__(self, figure_owner, figure_position: tuple) -> None:
+    def __init__(self, figure_owner, figure_position: tuple, figure_image) -> None:
         self.figure_owner = figure_owner
         self.figure_position: tuple = figure_position
+        self.figure_image = figure_image
 
     def __repr__(self) -> str:
         return "Q"
@@ -205,10 +216,12 @@ class King(IFigure):
     
     figure_point: int = 6
     figure_move: int = 1
+    figure_files: list = ["images/w_king.png", "images/b_king.png"]
 
-    def __init__(self, figure_owner, figure_position: tuple) -> None:
+    def __init__(self, figure_owner, figure_position: tuple, figure_image) -> None:
         self.figure_owner = figure_owner
         self.figure_position: tuple = figure_position
+        self.figure_image = figure_image
 
     def __repr__(self) -> str:
         return "H"
