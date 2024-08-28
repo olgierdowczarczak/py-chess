@@ -1,5 +1,5 @@
 import pygame
-from user import Bot, Player
+from user import *
 from figure import *
 from random import shuffle
 
@@ -113,17 +113,13 @@ class Game:
         # if not game_result == -1:
         #     return game_result
 
-        return (self.bot if self.mover == self.bot else self.player).user_move(self)
+        return (self.bot if self.mover == self.bot else self.player).pre_user_move(self)
 
     def check_board(self) -> int:
         return -1
     
-    def check_move(self, figure_position: tuple, direction_position: list, move: int):
-        row, col = figure_position[0], figure_position[1]
-        for _ in range(move+1):
-            row += direction_position[0]
-            col += direction_position[1]
-        
+    def check_move(self, new_position: tuple):
+        row, col = new_position
         if row < 0 or row > 7 or col < 0 or col > 7:
             return 0
         

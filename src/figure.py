@@ -7,10 +7,22 @@ class IFigure(ABC):
     def check_figure_move():
         """move figure"""
 
+    @classmethod
+    def figure_move(cls, figure, direction: str, move: int, game) -> list:
+        position_object = game.check_move(figure.figure_position, figure.figures_directions[direction], move)
+        if position_object == 0:
+            return [None, 0]
+        
+        if position_object is None:
+            return [None, 1]
+        
+        if position_object.figure_owner == game.mover:
+            return [None, -1]
+
+        return [position_object, position_object.figure_point]
+
 
 class Pawn(IFigure):
-
-    # possible figure moves
 
     figures_directions: dict = {
         "N" : [0, 1],
@@ -31,29 +43,19 @@ class Pawn(IFigure):
         return "P"
 
     def check_figure_move(self, direction: str, move: int, game) -> int:
-        position_object = game.check_move(self.figure_position, self.figures_directions[direction], move)
+        data: list = IFigure.figure_move(self, direction, move, game)
 
-        if position_object == 0:
-            return 0
-        
-        if game.mover.first_move == True:
-            return 0
-        
-        if position_object is None:
+        if data[0] is None:
             if direction == "NE" or direction == "NW":
                 return 0 
                 
             return 1
-        
-        if position_object.figure_owner == game.mover:
-            return -1
 
-        return position_object.figure_point
+        return IFigure.figure_move(self, direction, move, game)[1]
     
 
 class Rook(IFigure):
     
-    # possible figure moves
     figures_directions: dict = {
         "N" : [0, 1],
         "E" : [1, 0],
@@ -74,22 +76,11 @@ class Rook(IFigure):
         return "R"
 
     def check_figure_move(self, direction: str, move: int, game) -> int:
-        position_object = game.check_move(self.figure_position, self.figures_directions[direction], move)
-        if position_object == 0:
-            return 0
-        
-        if position_object is None:
-            return 1
-        
-        if position_object.figure_owner == game.mover:
-            return -1
-
-        return position_object.figure_point
+        return IFigure.figure_move(self, direction, move, game)[1]
 
 
 class Knight(IFigure):
 
-    # possible figure moves
     figures_directions: dict = {
         "NE" : [1, 2],
         "SE" : [2, -1],
@@ -111,22 +102,11 @@ class Knight(IFigure):
         return "K"
 
     def check_figure_move(self, direction: str, move: int, game) -> int:
-        position_object = game.check_move(self.figure_position, self.figures_directions[direction], move)
-        if position_object == 0:
-            return 0
-        
-        if position_object is None:
-            return 1
-        
-        if position_object.figure_owner == game.mover:
-            return -1
-
-        return position_object.figure_point
+        return IFigure.figure_move(self, direction, move, game)[1]
 
 
 class Bishop(IFigure):
 
-    # possible figure moves
     figures_directions: dict = {
         "NE" : [1, 1],
         "SE" : [1, -1],
@@ -147,22 +127,11 @@ class Bishop(IFigure):
         return "B"
 
     def check_figure_move(self, direction: str, move: int, game) -> int:
-        position_object = game.check_move(self.figure_position, self.figures_directions[direction], move)
-        if position_object == 0:
-            return 0
-        
-        if position_object is None:
-            return 1
-        
-        if position_object.figure_owner == game.mover:
-            return -1
-
-        return position_object.figure_point
+        return IFigure.figure_move(self, direction, move, game)[1]
 
 
 class Queen(IFigure):
 
-    # possible figure moves
     figures_directions: dict = {
         "N" : [0, 1],
         "NE" : [1, 1],
@@ -187,22 +156,11 @@ class Queen(IFigure):
         return "Q"
 
     def check_figure_move(self, direction: str, move: int, game) -> int:
-        position_object = game.check_move(self.figure_position, self.figures_directions[direction], move)
-        if position_object == 0:
-            return 0
-        
-        if position_object is None:
-            return 1
-        
-        if position_object.figure_owner == game.mover:
-            return -1
-
-        return position_object.figure_point
+        return IFigure.figure_move(self, direction, move, game)[1]
 
 
 class King(IFigure):
 
-    # possible figure moves
     figures_directions: dict = {
         "N" : [0, 1],
         "NE" : [1, 1],
@@ -227,17 +185,7 @@ class King(IFigure):
         return "H"
 
     def check_figure_move(self, direction: str, move: int, game) -> int:
-        position_object = game.check_move(self.figure_position, self.figures_directions[direction], move)
-        if position_object == 0:
-            return 0
-        
-        if position_object is None:
-            return 1
-        
-        if position_object.figure_owner == game.mover:
-            return -1
-
-        return position_object.figure_point
+        return IFigure.figure_move(self, direction, move, game)[1]
 
 
 class FigureFactory:
