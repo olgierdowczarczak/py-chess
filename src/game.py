@@ -17,10 +17,9 @@ class Game:
         # init bot, player, mover
         self.bot = Bot()
         self.player = Player()
-        self.mover = self.bot
         self.users_list: list = [self.bot, self.player]
-        #shuffle(self.users_list)
-        #self.mover = users[0]
+        shuffle(self.users_list)
+        self.mover = self.users_list[0]
 
         # init board
         self.game_board: list = [[None for _ in range(8)] for _ in range(8)]
@@ -91,6 +90,8 @@ class Game:
                     x, y = pygame.mouse.get_pos()
                     self.place_clicked = (True, x // self.square_size, y // self.square_size)
 
+            if self.game_loop is False: break
+
             self.draw_board() # draw board
 
             # pre move
@@ -141,6 +142,6 @@ class Game:
     def update_figures(self) -> None:
         # update board
         for row in self.game_board:
-            for place in row:
-                if place is None: continue
-                self.screen.blit(place.figure_image, (place.figure_position[0] * self.square_size, place.figure_position[1] * self.square_size))
+            for figure in row:
+                if figure is None: continue
+                self.screen.blit(figure.figure_image, (figure.figure_position[0] * self.square_size, figure.figure_position[1] * self.square_size))

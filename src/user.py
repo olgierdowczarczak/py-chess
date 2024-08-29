@@ -17,6 +17,7 @@ class Bot(IUser):
         return "Bot"
 
     def pre_user_move(self, game) -> int:
+        # to do
         figure = self.user_figures[1]
         direction = figure.figures_directions["NE"]
         move = 1
@@ -26,9 +27,10 @@ class Bot(IUser):
             row += direction[0] * (-1 if figure.figure_owner == game.users_list[1] else 1)
             col += direction[1] * (-1 if figure.figure_owner == game.users_list[1] else 1)
 
-        # if figure.is_figure_move_correct((row, col), game) is False:
-        #     return -2 # wrong move
-        #game.make_move(figure, (row, col)) # make move
+        if figure.is_figure_move_correct((row, col), game) is False:
+            return -2 # wrong move
+        
+        game.make_move(figure, (row, col)) # make move
 
         self.first_move = True
         return -1 # correct move
@@ -58,7 +60,11 @@ class Player(IUser):
         if self.picked_place is None:
             cliecked, row, col = game.place_clicked
             if cliecked is False: return -3
-            if self.picked_figure.is_figure_move_correct((row, col), game) is False: return -3
+            if self.picked_figure.is_figure_move_correct((row, col), game) is False: 
+                self.picked_figure = None
+                self.picked_place = None
+                return -2
+            
             self.picked_place = (row, col)
             return -3
 
