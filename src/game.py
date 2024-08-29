@@ -18,112 +18,116 @@ class Game:
         self.bot = Bot()
         self.player = Player()
         self.mover = self.bot
-        users_list: list = [self.bot, self.player]
-        #shuffle(users_list)
+        self.users_list: list = [self.bot, self.player]
+        #shuffle(self.users_list)
         #self.mover = users[0]
 
         # init board
         self.game_board: list = [[None for _ in range(8)] for _ in range(8)]
         self.game_board[0] = [
-            FigureFactory.build_figure("Rook")(users_list[0], (0, 0), pygame.transform.scale(pygame.image.load(Rook.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Knight")(users_list[0], (1, 0), pygame.transform.scale(pygame.image.load(Knight.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Bishop")(users_list[0], (2, 0), pygame.transform.scale(pygame.image.load(Bishop.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Queen")(users_list[0], (3, 0), pygame.transform.scale(pygame.image.load(Queen.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("King")(users_list[0], (4, 0), pygame.transform.scale(pygame.image.load(King.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Bishop")(users_list[0], (5, 0), pygame.transform.scale(pygame.image.load(Bishop.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Knight")(users_list[0], (6, 0), pygame.transform.scale(pygame.image.load(Knight.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Rook")(users_list[0], (7, 0), pygame.transform.scale(pygame.image.load(Rook.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Rook")(self.users_list[0], (0, 0), pygame.transform.scale(pygame.image.load(Rook.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Knight")(self.users_list[0], (1, 0), pygame.transform.scale(pygame.image.load(Knight.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Bishop")(self.users_list[0], (2, 0), pygame.transform.scale(pygame.image.load(Bishop.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Queen")(self.users_list[0], (3, 0), pygame.transform.scale(pygame.image.load(Queen.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("King")(self.users_list[0], (4, 0), pygame.transform.scale(pygame.image.load(King.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Bishop")(self.users_list[0], (5, 0), pygame.transform.scale(pygame.image.load(Bishop.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Knight")(self.users_list[0], (6, 0), pygame.transform.scale(pygame.image.load(Knight.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Rook")(self.users_list[0], (7, 0), pygame.transform.scale(pygame.image.load(Rook.figure_files[0]), (self.square_size, self.square_size))),
         ]
         self.game_board[1] = [
-            FigureFactory.build_figure("Pawn")(users_list[0], (0, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[0], (1, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[0], (2, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[0], (3, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[0], (4, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[0], (5, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[0], (6, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[0], (7, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[0], (0, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[0], (1, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[0], (2, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[0], (3, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[0], (4, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[0], (5, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[0], (6, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[0], (7, 1), pygame.transform.scale(pygame.image.load(Pawn.figure_files[0]), (self.square_size, self.square_size))),
         ]
         self.game_board[6] = [
-            FigureFactory.build_figure("Pawn")(users_list[1], (0, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[1], (1, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[1], (2, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[1], (3, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[1], (4, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[1], (5, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[1], (6, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Pawn")(users_list[1], (7, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[1], (0, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[1], (1, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[1], (2, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[1], (3, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[1], (4, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[1], (5, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[1], (6, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Pawn")(self.users_list[1], (7, 6), pygame.transform.scale(pygame.image.load(Pawn.figure_files[1]), (self.square_size, self.square_size))),
         ]
         self.game_board[7] = [
-            FigureFactory.build_figure("Rook")(users_list[1], (0, 7), pygame.transform.scale(pygame.image.load(Rook.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Knight")(users_list[1], (1, 7), pygame.transform.scale(pygame.image.load(Knight.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Bishop")(users_list[1], (2, 7), pygame.transform.scale(pygame.image.load(Bishop.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Queen")(users_list[1], (3, 7), pygame.transform.scale(pygame.image.load(Queen.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("King")(users_list[1], (4, 7), pygame.transform.scale(pygame.image.load(King.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Bishop")(users_list[1], (5, 7), pygame.transform.scale(pygame.image.load(Bishop.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Knight")(users_list[1], (6, 7), pygame.transform.scale(pygame.image.load(Knight.figure_files[1]), (self.square_size, self.square_size))),
-            FigureFactory.build_figure("Rook")(users_list[1], (7, 7), pygame.transform.scale(pygame.image.load(Rook.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Rook")(self.users_list[1], (0, 7), pygame.transform.scale(pygame.image.load(Rook.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Knight")(self.users_list[1], (1, 7), pygame.transform.scale(pygame.image.load(Knight.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Bishop")(self.users_list[1], (2, 7), pygame.transform.scale(pygame.image.load(Bishop.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Queen")(self.users_list[1], (3, 7), pygame.transform.scale(pygame.image.load(Queen.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("King")(self.users_list[1], (4, 7), pygame.transform.scale(pygame.image.load(King.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Bishop")(self.users_list[1], (5, 7), pygame.transform.scale(pygame.image.load(Bishop.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Knight")(self.users_list[1], (6, 7), pygame.transform.scale(pygame.image.load(Knight.figure_files[1]), (self.square_size, self.square_size))),
+            FigureFactory.build_figure("Rook")(self.users_list[1], (7, 7), pygame.transform.scale(pygame.image.load(Rook.figure_files[1]), (self.square_size, self.square_size))),
         ]
 
         # sign figures to users
-        users_list[0].user_figures = self.game_board[0] + self.game_board[1]
-        users_list[1].user_figures = self.game_board[7] + self.game_board[6]
+        self.users_list[0].user_figures = self.game_board[0] + self.game_board[1]
+        self.users_list[1].user_figures = self.game_board[7] + self.game_board[6]
 
-        # draw board
-        self.draw_board()
-        self.update_board()
-        pygame.display.flip()
+        self.draw_board() # draw board
+        self.update_figures() # draw figures
+        pygame.display.flip() # refresh screen
 
         # game loop
+        self.game_loop: bool = True
         self.game_status: int = -1
-        while self.game_status:
+
+        while self.game_loop:
+            # self.check_game()
+
+            # events
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.game_status = 0
+                if event.type == pygame.QUIT: # press quit
+                    self.game_status = 2
+                    self.game_loop = False
                     break
 
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN: # press button
                     x, y = pygame.mouse.get_pos()
-                    row = x // self.square_size
-                    col = y // self.square_size
-                    self.place_clicked = (True, row, col)
+                    self.place_clicked = (True, x // self.square_size, y // self.square_size)
 
-            # refresh screen
-            self.draw_board()
+            self.draw_board() # draw board
 
-            self.game_status = self.check_game()
-            if self.game_status == -2: continue # show place to set figure
-            if self.game_status == -1: continue
+            # pre move
+            self.game_status = (self.bot if self.mover == self.bot else self.player).pre_user_move(self) # make move
+            if self.game_status == -2: continue # wrong move, try again
+            elif self.game_status == -3:
+                self.place_clicked = (False, 0, 0) # reset clicked place
+                continue # wait for move
+            
+            # post move
+            self.mover = self.bot if self.mover == self.player else self.player # change mover
+            self.place_clicked = (False, 0, 0) # reset clicked place
+            
+            # update pawn moves
+            if self.bot.first_move is True and self.player.first_move is True:
+                Pawn.figure_move = 1
 
-            self.mover = self.bot if self.mover == self.player else self.player
-            self.place_clicked = (False, 0, 0)
+            # update board
+            self.update_figures() # draw figures
+            pygame.display.flip() # refresh screen
 
-            # refresh screen
-            self.update_board()
-            pygame.display.flip()
-
-        if self.game_status == 0: print("None Result")
-        elif self.game_status == -1: print("Draw")
+        if self.game_status == 2: print("None Result")
+        elif self.game_status == 3: print("Draw")
         else: print(f"{self.player if self.game_status else self.bot} wins!")
-
         pygame.quit()
-
-    def check_game(self) -> int:
-        # game_result: int = self.check_board()
-        # if not game_result == -1:
-        #     return game_result
-
-        return (self.bot if self.mover == self.bot else self.player).pre_user_move(self)
 
     def check_board(self) -> int:
         return -1
     
-    def check_move(self, new_position: tuple):
-        row, col = new_position
-        if row < 0 or row > 7 or col < 0 or col > 7:
-            return 0
-        
-        return self.game_board[col][row]
+    def is_place_out_of_board(self, position: tuple) -> bool:
+        return True if position[0] < 0 or position[0] > 7 or position[1] < 0 or position[1] > 7 else False
+    
+    def make_move(self, figure, new_position: tuple) -> None:
+        start_position: tuple = figure.figure_position
+        self.game_board[start_position[1]][start_position[0]] = None
+        figure.figure_position = new_position
+        self.game_board[new_position[1]][new_position[0]] = figure
 
     def draw_board(self) -> None:
         # draw board
@@ -134,7 +138,7 @@ class Game:
                 else: color = (255, 255, 255)
                 pygame.draw.rect(self.screen, color, (col * self.square_size, row * self.square_size, self.square_size, self.square_size))
 
-    def update_board(self) -> None:
+    def update_figures(self) -> None:
         # update board
         for row in self.game_board:
             for place in row:

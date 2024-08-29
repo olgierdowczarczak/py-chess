@@ -6,10 +6,6 @@ class IUser(ABC):
     def pre_user_move():
         """user move"""
 
-    @abstractmethod
-    def post_user_move():
-        """user make move"""
-
 
 class Bot(IUser):
 
@@ -27,49 +23,48 @@ class Bot(IUser):
 
         row, col = figure.figure_position
         for _ in range(move):
-            row += direction[0]
-            col += direction[1]
+            row += direction[0] * (-1 if figure.figure_owner == game.users_list[1] else 1)
+            col += direction[1] * (-1 if figure.figure_owner == game.users_list[1] else 1)
 
-        print(game.check_move((row, col)))
+        # if figure.is_figure_move_correct((row, col), game) is False:
+        #     return -2 # wrong move
+        #game.make_move(figure, (row, col)) # make move
 
         self.first_move = True
-        return 1
-    
-    def post_user_move(self, move: tuple, game) -> int: # point, move, direction, figure
-        return 1
+        return -1 # correct move
 
 class Player(IUser):
 
     def __init__(self) -> None:
         self.first_move: bool = False
         self.user_figures: list = []
-        self.made_move: bool = False
-        self.figure_selected = None
-        self.place_selected = None
+        self.picked_figure = None
+        self.picked_place = None
 
     def __repr__(self) -> str:
         return "Player"
     
     def pre_user_move(self, game) -> int:
-        cliecked, row, col = game.place_clicked
-        if cliecked is False: return -1
+        if self.picked_figure is None:
+            cliecked, row, col = game.place_clicked
+            if cliecked is False: return -3
+            
+            item = game.game_board[col][row]
+            if item is None: return -3
+            if item.figure_owner != self: return -3
+            self.picked_figure = item
+            return -3
+        
+        if self.picked_place is None:
+            cliecked, row, col = game.place_clicked
+            if cliecked is False: return -3
+            if self.picked_figure.is_figure_move_correct((row, col), game) is False: return -3
+            self.picked_place = (row, col)
+            return -3
 
-        if self.figure_selected:
-            if self.place_selected is None:
-                # select place to put selected figure
-                return -1
-            else:
-                ret: tuple = (self.place_selected, game)
-                self.figure_selected = None
-                self.place_selected = None
-                if self.made_move: self.first_move = True
-                return self.post_user_move(ret)
-        else:
-            selected_figure = game.game_board[col][row]
-            if selected_figure is None: return -1
-            if selected_figure.figure_owner != self: return -1
-            self.figure_selected = selected_figure
-            return -2
-    
-    def post_user_move(self, move: tuple, game) -> int: # x, y
-        return 1
+
+        game.make_move(self.picked_figure, self.picked_place) # make move
+        self.first_move = True
+        self.picked_figure = None
+        self.picked_place = None
+        return -1 # correct move
