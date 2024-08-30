@@ -5,7 +5,7 @@ class IFigure(ABC):
 
     @abstractmethod
     def is_figure_move_correct():
-        """move figure"""
+        """check figure move"""
     
 
 class FigureLogic:
@@ -18,25 +18,45 @@ class FigureLogic:
                 row += self.figures_directions[direction][0] * (-1 if self.figure_owner == game.users_list[1] else 1)
                 col += self.figures_directions[direction][1] * (-1 if self.figure_owner == game.users_list[1] else 1)
 
-                try: item = game.game_board[col][row]
+                try: piece = game.game_board[col][row]
                 except IndexError: break
 
-                if not item is None:
-                    if item.figure_owner == self.figure_owner: break # if own figure on path
-                    elif item and ((row, col) != new_position): break # if enemy figure on path
+                if piece is not None:
+                    if piece.figure_owner == self.figure_owner: break # if own figure on path
+                    elif piece.figure_owner != self.figure_owner and ((row, col) != new_position): break # if enemy figure on path
 
-                if ((row, col) == new_position):
-                    return direction
+                if ((row, col) == new_position): return direction
 
         return None
 
     def check_figure_move(self, new_position: tuple, game) -> bool:
         if game.is_place_out_of_board(new_position) is True: return False # Move out of board 
-        item = game.game_board[new_position[1]][new_position[0]]
-        if item is None: return True # No object
-        if item.figure_owner == self.figure_owner: return False # Own figure
-        
+        piece = game.game_board[new_position[1]][new_position[0]]
+        if piece is None: return True # No object
+        if piece.figure_owner == self.figure_owner: return False # Own figure
         return True # Move correct
+    
+    def generate_moves(self, game) -> list:
+        possible_moves: list = []
+
+        for direction in self.figures_directions.values():
+            current_position: list = list(self.figure_position)
+            while True:
+                current_position[0] += direction[0]
+                current_position[1] += direction[1]
+
+                if game.is_place_out_of_board(current_position) is True: break # out of board
+
+                piece = game.game_board[current_position[0]][current_position[1]]
+                if piece is None: 
+                    possible_moves.append((self.figure_position, tuple(current_position)))
+                else: 
+                    if piece.figure_owner != self.figure_owner: 
+                        possible_moves.append((self.figure_position, tuple(current_position)))
+                        
+                    break
+
+        return possible_moves
 
 
 class Pawn(IFigure, FigureLogic):
@@ -63,10 +83,11 @@ class Pawn(IFigure, FigureLogic):
         if self.check_figure_move(new_position, game) is False: return False
         
         direction = self.check_direction(new_position, game)
+        piece = game.game_board[new_position[1]][new_position[0]]
         if not direction == "N":
-            item = game.game_board[new_position[1]][new_position[0]]
-            if item == None: return False # Block move
-            elif item.figure_owner == self.figure_owner: return False # Own figure
+            if piece == None: return False # Block move
+            elif piece.figure_owner == self.figure_owner: return False # Own figure
+        else: return True if piece == None else False
         
         if direction is None: return False
         return True

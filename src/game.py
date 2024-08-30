@@ -1,6 +1,7 @@
 import pygame
 from user import *
 from figure import *
+from model import Model
 from random import shuffle
 
 
@@ -19,7 +20,8 @@ class Game:
         self.player = Player()
         self.users_list: list = [self.bot, self.player]
         shuffle(self.users_list)
-        self.mover = self.users_list[0]
+        #self.mover = self.users_list[0]
+        self.mover = self.player
 
         # init board
         self.game_board: list = [[None for _ in range(8)] for _ in range(8)]
@@ -71,6 +73,9 @@ class Game:
         self.draw_board() # draw board
         self.update_figures() # draw figures
         pygame.display.flip() # refresh screen
+
+        # get model
+        self.model = Model(self)
 
         # game loop
         self.game_loop: bool = True
