@@ -109,10 +109,6 @@ class Game:
             # post move
             self.mover = self.bot if self.mover == self.player else self.player # change mover
             self.place_clicked = (False, 0, 0) # reset clicked place
-            
-            # update pawn moves
-            if self.bot.first_move is True and self.player.first_move is True:
-                Pawn.figure_move = 1
 
             # update board
             self.update_figures() # draw figures

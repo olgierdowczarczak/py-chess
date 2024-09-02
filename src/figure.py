@@ -68,28 +68,34 @@ class Pawn(IFigure, FigureLogic):
     }
     
     figure_point: int = 1
-    figure_move: int = 2
     figure_files: list = ["images/w_pawn.png", "images/b_pawn.png"]
 
     def __init__(self, figure_owner, figure_position: tuple, figure_image) -> None:
         self.figure_owner = figure_owner
         self.figure_position: tuple = figure_position
         self.figure_image = figure_image
+        self.figure_move: int = 2
 
     def __repr__(self) -> str:
         return "P"
 
     def is_figure_move_correct(self, new_position: tuple, game) -> bool:
+
         if self.check_figure_move(new_position, game) is False: return False
-        
+
         direction = self.check_direction(new_position, game)
         piece = game.game_board[new_position[1]][new_position[0]]
         if not direction == "N":
             if piece == None: return False # Block move
             elif piece.figure_owner == self.figure_owner: return False # Own figure
-        else: return True if piece == None else False
-        
-        if direction is None: return False
+        else: 
+            if piece == None:
+                if self.figure_move == 2:
+                    self.figure_move = 1
+
+                return True
+            else: return False
+
         return True
     
 
@@ -103,13 +109,13 @@ class Rook(IFigure, FigureLogic):
     }
     
     figure_point: int = 2
-    figure_move: int = 8
     figure_files: list = ["images/w_rook.png", "images/b_rook.png"]
 
     def __init__(self, figure_owner, figure_position: tuple, figure_image) -> None:
         self.figure_owner = figure_owner
         self.figure_position: tuple = figure_position
         self.figure_image = figure_image
+        self.figure_move: int = 8
 
     def __repr__(self) -> str:
         return "R"
@@ -134,13 +140,13 @@ class Knight(IFigure, FigureLogic):
     }
     
     figure_point: int = 3
-    figure_move: int = 1
     figure_files: list = ["images/w_knight.png", "images/b_knight.png"]
 
     def __init__(self, figure_owner, figure_position: tuple, figure_image) -> None:
         self.figure_owner = figure_owner
         self.figure_position: tuple = figure_position
         self.figure_image = figure_image
+        self.figure_move: int = 1
 
     def __repr__(self) -> str:
         return "K"
@@ -161,13 +167,13 @@ class Bishop(IFigure, FigureLogic):
     }
     
     figure_point: int = 4
-    figure_move: int = 8
     figure_files: list = ["images/w_bishop.png", "images/b_bishop.png"]
 
     def __init__(self, figure_owner, figure_position: tuple, figure_image) -> None:
         self.figure_owner = figure_owner
         self.figure_position: tuple = figure_position
         self.figure_image = figure_image
+        self.figure_move: int = 8
 
     def __repr__(self) -> str:
         return "B"
@@ -192,13 +198,13 @@ class Queen(IFigure, FigureLogic):
     }
     
     figure_point: int = 5
-    figure_move: int = 8
     figure_files: list = ["images/w_queen.png", "images/b_queen.png"]
 
     def __init__(self, figure_owner, figure_position: tuple, figure_image) -> None:
         self.figure_owner = figure_owner
         self.figure_position: tuple = figure_position
         self.figure_image = figure_image
+        self.figure_move: int = 5
 
     def __repr__(self) -> str:
         return "Q"
@@ -223,13 +229,13 @@ class King(IFigure, FigureLogic):
     }
     
     figure_point: int = 6
-    figure_move: int = 1
     figure_files: list = ["images/w_king.png", "images/b_king.png"]
 
     def __init__(self, figure_owner, figure_position: tuple, figure_image) -> None:
         self.figure_owner = figure_owner
         self.figure_position: tuple = figure_position
         self.figure_image = figure_image
+        self.figure_move: int = 1
 
     def __repr__(self) -> str:
         return "H"

@@ -11,20 +11,17 @@ class IUser(ABC):
 class Bot(IUser):
 
     def __init__(self) -> None:
-        self.first_move: bool = False
         self.user_figures: list = []
 
     def __repr__(self) -> str:
         return "Bot"
 
     def pre_user_move(self, game) -> int:
-        self.first_move = True
         return -1 # correct move
 
 class Player(IUser):
 
     def __init__(self) -> None:
-        self.first_move: bool = False
         self.user_figures: list = []
         self.picked_figure = None
         self.picked_place = None
@@ -54,7 +51,6 @@ class Player(IUser):
             return -3
 
         game.make_move(self.picked_figure, self.picked_place) # make move
-        self.first_move = True
         self.picked_figure = None
         self.picked_place = None
         return -1 # correct move
